@@ -4,7 +4,7 @@ import plotly.graph_objs as go
 import numpy as np
 
 
-def create_cube_trace_3D(
+def create_cube_box_3D(
         xyz_cube_cntr: Array[int, float, 3],
         cube_incr: Array[int, float, 3]):
 
@@ -41,22 +41,40 @@ def create_cube_trace_3D(
         mode='lines',
         marker=dict(
             color='black'
-        )
+        ),
+        showlegend=False,
     )
 
 
-def create_cube_traces_3D(
+def create_cube_boxs_3D(
         xyz_cube_cntrs: Array[float, 3, ...],
         cube_incr: Array[float, 3]):
 
-    cube_traces = []
+    cube_boxs = []
 
     for i in range(xyz_cube_cntrs.shape[1]):
 
-        cube_trace = create_cube_trace_3D(
+        cube_box = create_cube_box_3D(
             xyz_cube_cntr=xyz_cube_cntrs[:, i],
             cube_incr=cube_incr,
         )
-        cube_traces.append(cube_trace)
+        cube_boxs.append(cube_box)
 
-    return cube_traces
+    return cube_boxs
+
+
+def creat_cube_cntrs(xyz_cube_cntrs: Array[float, 3, ...]):
+
+    cube_cntr_traces = [go.Scatter3d(
+        x=xyz_cube_cntrs[0, :],
+        y=xyz_cube_cntrs[1, :],
+        z=xyz_cube_cntrs[2, :],
+        mode='markers',
+        marker=dict(
+            color='blue',
+            size=5,
+        ),
+        showlegend=False,
+    )]
+
+    return cube_cntr_traces
